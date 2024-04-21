@@ -11,8 +11,6 @@ public class Group: ObservableObject
     private Course _course = null!;
     private int _teacherId;
     private Teacher _teacher = null!;
-    private int _studentId;
-    private Student _student = null!;
     
     [StringLength(50)] 
     public string Name
@@ -42,15 +40,5 @@ public class Group: ObservableObject
         get => _teacher;
         set => SetProperty(ref _teacher, value);
     }
-
-    public  int StudentId 
-    {
-        get => _studentId;
-        set => SetProperty(ref _studentId, value);
-    }
-    public Student Student
-    {
-        get => _student;
-        set => SetProperty(ref _student, value);
-    }
+    
 }

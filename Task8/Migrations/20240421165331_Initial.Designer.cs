@@ -11,7 +11,7 @@ using Task8.Data;
 namespace Task8.Migrations
 {
     [DbContext(typeof(SqlServerAppContext))]
-    [Migration("20240407122608_Initial")]
+    [Migration("20240421165331_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -19,7 +19,7 @@ namespace Task8.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0-preview.2.24128.4")
+                .HasAnnotation("ProductVersion", "9.0.0-preview.3.24172.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -63,17 +63,12 @@ namespace Task8.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
                     b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
-
-                    b.HasIndex("StudentId");
 
                     b.HasIndex("TeacherId");
 
@@ -93,12 +88,17 @@ namespace Task8.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
 
                     b.ToTable("Students");
                 });
@@ -134,12 +134,6 @@ namespace Task8.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Task8.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Task8.Models.Teacher", "Teacher")
                         .WithMany()
                         .HasForeignKey("TeacherId")
@@ -148,9 +142,18 @@ namespace Task8.Migrations
 
                     b.Navigation("Course");
 
-                    b.Navigation("Student");
-
                     b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("Task8.Models.Student", b =>
+                {
+                    b.HasOne("Task8.Models.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
                 });
 #pragma warning restore 612, 618
         }

@@ -11,7 +11,7 @@ using Task8.Data;
 namespace Task8.Migrations
 {
     [DbContext(typeof(SqlServerAppContext))]
-    [Migration("20240407152102_seed")]
+    [Migration("20240421165730_seed")]
     partial class seed
     {
         /// <inheritdoc />
@@ -19,7 +19,7 @@ namespace Task8.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0-preview.2.24128.4")
+                .HasAnnotation("ProductVersion", "9.0.0-preview.3.24172.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -95,17 +95,12 @@ namespace Task8.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
                     b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
-
-                    b.HasIndex("StudentId");
 
                     b.HasIndex("TeacherId");
 
@@ -117,7 +112,6 @@ namespace Task8.Migrations
                             Id = 1,
                             CourseId = 1,
                             Name = "PPF-01",
-                            StudentId = 1,
                             TeacherId = 1
                         },
                         new
@@ -125,7 +119,6 @@ namespace Task8.Migrations
                             Id = 2,
                             CourseId = 1,
                             Name = "PPF-02",
-                            StudentId = 2,
                             TeacherId = 1
                         },
                         new
@@ -133,48 +126,42 @@ namespace Task8.Migrations
                             Id = 3,
                             CourseId = 1,
                             Name = "PPF-03",
-                            StudentId = 3,
-                            TeacherId = 1
+                            TeacherId = 2
                         },
                         new
                         {
                             Id = 4,
                             CourseId = 2,
                             Name = "DMC-01",
-                            StudentId = 3,
-                            TeacherId = 2
+                            TeacherId = 3
                         },
                         new
                         {
                             Id = 5,
                             CourseId = 2,
                             Name = "DMC-02",
-                            StudentId = 4,
-                            TeacherId = 2
+                            TeacherId = 4
                         },
                         new
                         {
                             Id = 6,
                             CourseId = 3,
                             Name = "WDB-01",
-                            StudentId = 5,
-                            TeacherId = 3
+                            TeacherId = 5
                         },
                         new
                         {
                             Id = 7,
                             CourseId = 3,
                             Name = "WDB-02",
-                            StudentId = 6,
-                            TeacherId = 3
+                            TeacherId = 6
                         },
                         new
                         {
                             Id = 8,
                             CourseId = 4,
                             Name = "GDE-01",
-                            StudentId = 7,
-                            TeacherId = 4
+                            TeacherId = 7
                         });
                 });
 
@@ -191,12 +178,17 @@ namespace Task8.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
 
                     b.ToTable("Students");
 
@@ -205,66 +197,77 @@ namespace Task8.Migrations
                         {
                             Id = 1,
                             FirstName = "John",
+                            GroupId = 1,
                             LastName = "Doe"
                         },
                         new
                         {
                             Id = 2,
                             FirstName = "Alice",
+                            GroupId = 1,
                             LastName = "Smith"
                         },
                         new
                         {
                             Id = 3,
                             FirstName = "Michael",
+                            GroupId = 1,
                             LastName = "Johnson"
                         },
                         new
                         {
                             Id = 4,
                             FirstName = "Emily",
+                            GroupId = 2,
                             LastName = "Brown"
                         },
                         new
                         {
                             Id = 5,
                             FirstName = "Daniel",
+                            GroupId = 3,
                             LastName = "Wilson"
                         },
                         new
                         {
                             Id = 6,
                             FirstName = "Jessica",
+                            GroupId = 3,
                             LastName = "Martinez"
                         },
                         new
                         {
                             Id = 7,
                             FirstName = "Matthew",
+                            GroupId = 4,
                             LastName = "Taylor"
                         },
                         new
                         {
                             Id = 8,
                             FirstName = "Sophia",
+                            GroupId = 5,
                             LastName = "Anderson"
                         },
                         new
                         {
                             Id = 9,
                             FirstName = "William",
+                            GroupId = 6,
                             LastName = "Thomas"
                         },
                         new
                         {
                             Id = 10,
                             FirstName = "Olivia",
+                            GroupId = 7,
                             LastName = "Hernandez"
                         },
                         new
                         {
                             Id = 11,
                             FirstName = "Ethan",
+                            GroupId = 8,
                             LastName = "Moore"
                         });
                 });
@@ -350,12 +353,6 @@ namespace Task8.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Task8.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Task8.Models.Teacher", "Teacher")
                         .WithMany()
                         .HasForeignKey("TeacherId")
@@ -364,9 +361,18 @@ namespace Task8.Migrations
 
                     b.Navigation("Course");
 
-                    b.Navigation("Student");
-
                     b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("Task8.Models.Student", b =>
+                {
+                    b.HasOne("Task8.Models.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
                 });
 #pragma warning restore 612, 618
         }

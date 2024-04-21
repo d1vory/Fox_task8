@@ -25,24 +25,6 @@ namespace Task8.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Students",
-                columns: new[] { "Id", "FirstName", "LastName" },
-                values: new object[,]
-                {
-                    { 1, "John", "Doe" },
-                    { 2, "Alice", "Smith" },
-                    { 3, "Michael", "Johnson" },
-                    { 4, "Emily", "Brown" },
-                    { 5, "Daniel", "Wilson" },
-                    { 6, "Jessica", "Martinez" },
-                    { 7, "Matthew", "Taylor" },
-                    { 8, "Sophia", "Anderson" },
-                    { 9, "William", "Thomas" },
-                    { 10, "Olivia", "Hernandez" },
-                    { 11, "Ethan", "Moore" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Teachers",
                 columns: new[] { "Id", "FirstName", "LastName" },
                 values: new object[,]
@@ -59,17 +41,35 @@ namespace Task8.Migrations
 
             migrationBuilder.InsertData(
                 table: "Groups",
-                columns: new[] { "Id", "CourseId", "Name", "StudentId", "TeacherId" },
+                columns: new[] { "Id", "CourseId", "Name", "TeacherId" },
                 values: new object[,]
                 {
-                    { 1, 1, "PPF-01", 1, 1 },
-                    { 2, 1, "PPF-02", 2, 1 },
-                    { 3, 1, "PPF-03", 3, 1 },
-                    { 4, 2, "DMC-01", 3, 2 },
-                    { 5, 2, "DMC-02", 4, 2 },
-                    { 6, 3, "WDB-01", 5, 3 },
-                    { 7, 3, "WDB-02", 6, 3 },
-                    { 8, 4, "GDE-01", 7, 4 }
+                    { 1, 1, "PPF-01", 1 },
+                    { 2, 1, "PPF-02", 1 },
+                    { 3, 1, "PPF-03", 2 },
+                    { 4, 2, "DMC-01", 3 },
+                    { 5, 2, "DMC-02", 4 },
+                    { 6, 3, "WDB-01", 5 },
+                    { 7, 3, "WDB-02", 6 },
+                    { 8, 4, "GDE-01", 7 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Students",
+                columns: new[] { "Id", "FirstName", "GroupId", "LastName" },
+                values: new object[,]
+                {
+                    { 1, "John", 1, "Doe" },
+                    { 2, "Alice", 1, "Smith" },
+                    { 3, "Michael", 1, "Johnson" },
+                    { 4, "Emily", 2, "Brown" },
+                    { 5, "Daniel", 3, "Wilson" },
+                    { 6, "Jessica", 3, "Martinez" },
+                    { 7, "Matthew", 4, "Taylor" },
+                    { 8, "Sophia", 5, "Anderson" },
+                    { 9, "William", 6, "Thomas" },
+                    { 10, "Olivia", 7, "Hernandez" },
+                    { 11, "Ethan", 8, "Moore" }
                 });
         }
 
@@ -82,44 +82,39 @@ namespace Task8.Migrations
                 keyValue: 5);
 
             migrationBuilder.DeleteData(
-                table: "Groups",
+                table: "Students",
                 keyColumn: "Id",
                 keyValue: 1);
 
             migrationBuilder.DeleteData(
-                table: "Groups",
+                table: "Students",
                 keyColumn: "Id",
                 keyValue: 2);
 
             migrationBuilder.DeleteData(
-                table: "Groups",
+                table: "Students",
                 keyColumn: "Id",
                 keyValue: 3);
 
             migrationBuilder.DeleteData(
-                table: "Groups",
+                table: "Students",
                 keyColumn: "Id",
                 keyValue: 4);
 
             migrationBuilder.DeleteData(
-                table: "Groups",
+                table: "Students",
                 keyColumn: "Id",
                 keyValue: 5);
 
             migrationBuilder.DeleteData(
-                table: "Groups",
+                table: "Students",
                 keyColumn: "Id",
                 keyValue: 6);
 
             migrationBuilder.DeleteData(
-                table: "Groups",
+                table: "Students",
                 keyColumn: "Id",
                 keyValue: 7);
-
-            migrationBuilder.DeleteData(
-                table: "Groups",
-                keyColumn: "Id",
-                keyValue: 8);
 
             migrationBuilder.DeleteData(
                 table: "Students",
@@ -144,20 +139,45 @@ namespace Task8.Migrations
             migrationBuilder.DeleteData(
                 table: "Teachers",
                 keyColumn: "Id",
+                keyValue: 8);
+
+            migrationBuilder.DeleteData(
+                table: "Groups",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "Groups",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "Groups",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
+                table: "Groups",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "Groups",
+                keyColumn: "Id",
                 keyValue: 5);
 
             migrationBuilder.DeleteData(
-                table: "Teachers",
+                table: "Groups",
                 keyColumn: "Id",
                 keyValue: 6);
 
             migrationBuilder.DeleteData(
-                table: "Teachers",
+                table: "Groups",
                 keyColumn: "Id",
                 keyValue: 7);
 
             migrationBuilder.DeleteData(
-                table: "Teachers",
+                table: "Groups",
                 keyColumn: "Id",
                 keyValue: 8);
 
@@ -182,59 +202,39 @@ namespace Task8.Migrations
                 keyValue: 4);
 
             migrationBuilder.DeleteData(
-                table: "Students",
+                table: "Teachers",
                 keyColumn: "Id",
                 keyValue: 1);
 
             migrationBuilder.DeleteData(
-                table: "Students",
+                table: "Teachers",
                 keyColumn: "Id",
                 keyValue: 2);
 
             migrationBuilder.DeleteData(
-                table: "Students",
+                table: "Teachers",
                 keyColumn: "Id",
                 keyValue: 3);
 
             migrationBuilder.DeleteData(
-                table: "Students",
+                table: "Teachers",
                 keyColumn: "Id",
                 keyValue: 4);
 
             migrationBuilder.DeleteData(
-                table: "Students",
+                table: "Teachers",
                 keyColumn: "Id",
                 keyValue: 5);
 
             migrationBuilder.DeleteData(
-                table: "Students",
+                table: "Teachers",
                 keyColumn: "Id",
                 keyValue: 6);
 
             migrationBuilder.DeleteData(
-                table: "Students",
+                table: "Teachers",
                 keyColumn: "Id",
                 keyValue: 7);
-
-            migrationBuilder.DeleteData(
-                table: "Teachers",
-                keyColumn: "Id",
-                keyValue: 1);
-
-            migrationBuilder.DeleteData(
-                table: "Teachers",
-                keyColumn: "Id",
-                keyValue: 2);
-
-            migrationBuilder.DeleteData(
-                table: "Teachers",
-                keyColumn: "Id",
-                keyValue: 3);
-
-            migrationBuilder.DeleteData(
-                table: "Teachers",
-                keyColumn: "Id",
-                keyValue: 4);
         }
     }
 }
