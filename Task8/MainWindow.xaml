@@ -7,7 +7,7 @@
         xmlns:courses="clr-namespace:Task8.Views.Courses"
         xmlns:pages="clr-namespace:Task8.Views.Pages"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow">
         
         <pages:CoursesList/>
 

@@ -7,36 +7,31 @@
       xmlns:courses="clr-namespace:Task8.Views.Courses"
       mc:Ignorable="d"
       Title="CoursesList" Height="450" Width="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        
-        <TextBlock Grid.Row="0" TextAlignment="Center" Padding="20"> COURSES</TextBlock>
-        
-        <ListBox Grid.Row="1">
-
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <Border BorderBrush="Black" BorderThickness="2" Margin="2" Background="WhiteSmoke">
-                            <Grid >
-                                <Grid.RowDefinitions>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="{Binding Name}" TextAlignment="Center" TextWrapping="Wrap" FontWeight="Medium" FontSize="18" FontFamily="Verdana" FontStretch="Expanded"></TextBlock>
-                                <TextBlock  Grid.Row="1" Text="{Binding Description}" TextAlignment="Center" TextWrapping="Wrap" FontFamily="Verdana" ></TextBlock>
-                            </Grid>
-                        </Border>
-                        
-                        
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
+      <Grid Height="auto">
+            <Grid.RowDefinitions>
+                  <RowDefinition />
+                  <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
             
-        </ListBox>
-    </Grid>
+            <ScrollViewer ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                  <ListBox x:Name="CoursesList2" ItemsSource="{Binding Courses}">
+                        <ListBox.ItemTemplate>
+                              <DataTemplate>
+                                    <StackPanel>
+                                          <TextBlock Text="{Binding Name}" FontSize="16"  TextWrapping="Wrap" />
+                                          <TextBlock Text="{Binding Description}" FontSize="13"  TextWrapping="Wrap"/>
+                                    </StackPanel>
+                              </DataTemplate>
+                        </ListBox.ItemTemplate>
+                  </ListBox>
+            </ScrollViewer>
+            
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                  <Button Content="Добавить" Margin="10" Padding="3" Command="{Binding AddCourseCommand}"  />
+                  <Button Content="Изменить" Margin="10" Command="{Binding EditCourseCommand}"
+                          CommandParameter="{Binding ElementName=CoursesList2, Path=SelectedItem}"  />
+                  <Button Content="Удалить" Margin="10" Command="{Binding DeleteCourseCommand}"
+                          CommandParameter="{Binding ElementName=usersList, Path=SelectedItem}"  />
+            </StackPanel>
+      </Grid>
 </Page>
