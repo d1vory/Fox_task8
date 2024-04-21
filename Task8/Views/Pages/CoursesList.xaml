@@ -31,7 +31,7 @@
                   <Button Content="Изменить" Margin="10" Command="{Binding EditCourseCommand}"
                           CommandParameter="{Binding ElementName=CoursesList2, Path=SelectedItem}"  />
                   <Button Content="Удалить" Margin="10" Command="{Binding DeleteCourseCommand}"
-                          CommandParameter="{Binding ElementName=usersList, Path=SelectedItem}"  />
+                          CommandParameter="{Binding ElementName=CoursesList2, Path=SelectedItem}"  />
             </StackPanel>
       </Grid>
 </Page>
