@@ -4,8 +4,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Task8.Views.Pages"
+      xmlns:models="clr-namespace:Task8.Models"
       mc:Ignorable="d"
-      Title="GroupsList" Height="450" Width="800">
+      Title="GroupsList">
     <Grid Height="auto">
             <Grid.RowDefinitions>
                   <RowDefinition Height="30"/>
@@ -16,16 +17,12 @@
             <TextBlock TextAlignment="Center" FontSize="20">list of groups</TextBlock>
             
             <ScrollViewer Grid.Row="1" CanContentScroll="True" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-                  <ListBox x:Name="GroupsList2" ItemsSource="{Binding Groups}">
-                        <ListBox.ItemTemplate>
-                              <DataTemplate>
-                                    <StackPanel>
-                                          <TextBlock Text="{Binding Name}" FontSize="16"  TextWrapping="Wrap" />
-                                          <TextBlock Text="{Binding Description}" FontSize="13"  TextWrapping="Wrap"/>
-                                    </StackPanel>
-                              </DataTemplate>
-                        </ListBox.ItemTemplate>
-                  </ListBox>
+                <DataGrid x:Name="GroupsGrid" ItemsSource="{Binding Path= Groups}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*" MinWidth="100" />
+                        <!-- <DataGridTextColumn Header="Teacher" Binding="{Binding Path=TeacherFullName}" Width="*" MinWidth="100"  /> -->
+                    </DataGrid.Columns>
+                </DataGrid>
             </ScrollViewer>
             
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -34,7 +31,7 @@
                           CommandParameter="{Binding ElementName=CoursesList2, Path=SelectedItem}"  />
                   <Button Content="Delete" Margin="10" Padding="20  4" Command="{Binding DeleteCourseCommand}"
                           CommandParameter="{Binding ElementName=CoursesList2, Path=SelectedItem}"  />
-                  <Button Content="Show list of groups" Margin="10" Padding="20  4" Command="{Binding DeleteCourseCommand}"
+                  <Button Content="Show list of students" Margin="10" Padding="20  4" Command="{Binding DeleteCourseCommand}"
                           CommandParameter="{Binding ElementName=CoursesList2, Path=SelectedItem}"  />
             </StackPanel>
       </Grid>

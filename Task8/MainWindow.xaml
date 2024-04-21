@@ -8,7 +8,9 @@
         xmlns:pages="clr-namespace:Task8.Views.Pages"
         mc:Ignorable="d"
         Title="MainWindow">
-        
-        <pages:CoursesList/>
+
+        <Grid>
+                <Frame x:Name="MainFrame"/>
+        </Grid>
 
 </Window>

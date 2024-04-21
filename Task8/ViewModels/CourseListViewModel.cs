@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
@@ -10,13 +11,15 @@ namespace Task8.ViewModels;
 
 public partial class CourseListViewModel: ObservableObject
 {
+    private Frame _mainFrame;
     private SqlServerAppContext _db = new SqlServerAppContext();
-    public ObservableCollection<Course> Courses { get; } = new ObservableCollection<Course>();
+    public ObservableCollection<Course> Courses { get; }
 
-    public CourseListViewModel()
+    public CourseListViewModel(Frame mainFrame)
     {
         _db.Courses.Load();
         Courses = _db.Courses.Local.ToObservableCollection();
+        _mainFrame = mainFrame;
     }
     
     [RelayCommand]
@@ -59,5 +62,13 @@ public partial class CourseListViewModel: ObservableObject
         if( selectedCourse == null) return;
         _db.Courses.Remove(selectedCourse);
         _db.SaveChanges();
+    }
+    
+    [RelayCommand]
+    private void ListOfGroups(Course? selectedCourse)
+    {
+        if( selectedCourse == null) return;
+        _mainFrame.Content = new GroupsList(selectedCourse);
+        
     }
 }

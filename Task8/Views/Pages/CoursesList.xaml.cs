@@ -1,3 +1,4 @@
+using System.Windows;
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Task8.ViewModels;
@@ -6,11 +7,9 @@ namespace Task8.Views.Pages;
 
 public partial class CoursesList : Page
 {
-    public CoursesList()
+    public CoursesList(Frame mainFrame)
     {
         InitializeComponent();
-        DataContext = new CourseListViewModel();
+        DataContext = new CourseListViewModel(mainFrame);
     }
-    
-    //internal CourseListViewModel ViewModel => Ioc.Default.GetService<CourseListViewModel>();
 }
