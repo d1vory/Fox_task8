@@ -4,7 +4,6 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
 using Task8.Data;
 using Task8.Models;
-using Task8.Models.Wrappers;
 using Task8.Views.Pages;
 
 namespace Task8.ViewModels;
@@ -12,16 +11,12 @@ namespace Task8.ViewModels;
 public partial class CourseListViewModel: ObservableObject
 {
     private SqlServerAppContext _db = new SqlServerAppContext();
-    public ObservableCollection<ObservableCourse> Courses { get; } = new ObservableCollection<ObservableCourse>();
+    public ObservableCollection<Course> Courses { get; } = new ObservableCollection<Course>();
 
     public CourseListViewModel()
     {
         _db.Courses.Load();
-        foreach (var c in _db.Courses.Local.ToObservableCollection())
-        {
-            Courses.Add(new ObservableCourse(c));
-        }
-
+        Courses = _db.Courses.Local.ToObservableCollection();
     }
     
     [RelayCommand]
@@ -33,12 +28,11 @@ public partial class CourseListViewModel: ObservableObject
             var course = courseWindow.Course;
             _db.Courses.Add(course);
             _db.SaveChanges();
-            Courses.Add(new ObservableCourse(course));
         }
     }
 
     [RelayCommand]
-    private void EditCourse(ObservableCourse? selectedCourse)
+    private void EditCourse(Course? selectedCourse)
     {
         if( selectedCourse == null) return;
 
@@ -54,8 +48,11 @@ public partial class CourseListViewModel: ObservableObject
         {
             selectedCourse.Name = courseWindow.Course.Name;
             selectedCourse.Description = courseWindow.Course.Description;
-            selectedCourse.SaveChanges(_db);
+            _db.Entry(selectedCourse).State = EntityState.Modified;
+            _db.SaveChanges();
         }
+
+
     }
 
 }
