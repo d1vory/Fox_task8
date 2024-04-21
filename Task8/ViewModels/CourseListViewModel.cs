@@ -51,8 +51,13 @@ public partial class CourseListViewModel: ObservableObject
             _db.Entry(selectedCourse).State = EntityState.Modified;
             _db.SaveChanges();
         }
-
-
     }
 
+    [RelayCommand]
+    private void DeleteCourse(Course? selectedCourse)
+    {
+        if( selectedCourse == null) return;
+        _db.Courses.Remove(selectedCourse);
+        _db.SaveChanges();
+    }
 }

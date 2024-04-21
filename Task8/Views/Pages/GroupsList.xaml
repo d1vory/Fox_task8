@@ -1,23 +1,22 @@
-<Page x:Class="Task8.Views.Pages.CoursesList"
+<Page x:Class="Task8.Views.Pages.GroupsList"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Task8.Views.Pages"
-      xmlns:courses="clr-namespace:Task8.Views.Courses"
       mc:Ignorable="d"
-      Title="CoursesList">
-      <Grid Height="auto">
+      Title="GroupsList" Height="450" Width="800">
+    <Grid Height="auto">
             <Grid.RowDefinitions>
                   <RowDefinition Height="30"/>
                   <RowDefinition />
                   <RowDefinition Height="50" />
             </Grid.RowDefinitions>
             
-            <TextBlock TextAlignment="Center" FontSize="20">list of courses</TextBlock>
+            <TextBlock TextAlignment="Center" FontSize="20">list of groups</TextBlock>
             
             <ScrollViewer Grid.Row="1" CanContentScroll="True" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-                  <ListBox x:Name="CoursesList2" ItemsSource="{Binding Courses}">
+                  <ListBox x:Name="GroupsList2" ItemsSource="{Binding Groups}">
                         <ListBox.ItemTemplate>
                               <DataTemplate>
                                     <StackPanel>
