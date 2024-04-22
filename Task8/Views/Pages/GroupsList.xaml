@@ -17,22 +17,22 @@
             <TextBlock TextAlignment="Center" FontSize="20">list of groups</TextBlock>
             
             <ScrollViewer Grid.Row="1" CanContentScroll="True" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-                <DataGrid x:Name="GroupsGrid" ItemsSource="{Binding Path= Groups}">
+                <DataGrid x:Name="GroupsGrid" ItemsSource="{Binding Path= Groups}" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*" MinWidth="100" />
-                        <!-- <DataGridTextColumn Header="Teacher" Binding="{Binding Path=TeacherFullName}" Width="*" MinWidth="100"  /> -->
+                        <DataGridTextColumn Header="Teacher" Binding="{Binding Path=Teacher.FullName , Mode=OneWay}" Width="*" MinWidth="100"  />
                     </DataGrid.Columns>
                 </DataGrid>
             </ScrollViewer>
             
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                  <Button Content="Add" Margin="10" Padding="20  4" Command="{Binding AddCourseCommand}"  />
-                  <Button Content="Edit" Margin="10" Padding="20  4" Command="{Binding EditCourseCommand}"
-                          CommandParameter="{Binding ElementName=CoursesList2, Path=SelectedItem}"  />
-                  <Button Content="Delete" Margin="10" Padding="20  4" Command="{Binding DeleteCourseCommand}"
-                          CommandParameter="{Binding ElementName=CoursesList2, Path=SelectedItem}"  />
+                  <Button Content="Add" Margin="10" Padding="20  4" Command="{Binding AddGroupCommand}"  />
+                  <Button Content="Edit" Margin="10" Padding="20  4" Command="{Binding EditGroupCommand}"
+                          CommandParameter="{Binding ElementName=GroupsGrid, Path=SelectedItem}"  />
+                  <Button Content="Delete" Margin="10" Padding="20  4" Command="{Binding DeleteGroupCommand}"
+                          CommandParameter="{Binding ElementName=GroupsGrid, Path=SelectedItem}"  />
                   <Button Content="Show list of students" Margin="10" Padding="20  4" Command="{Binding DeleteCourseCommand}"
-                          CommandParameter="{Binding ElementName=CoursesList2, Path=SelectedItem}"  />
+                          CommandParameter="{Binding ElementName=GroupsGrid, Path=SelectedItem}"  />
             </StackPanel>
       </Grid>
 </Page>

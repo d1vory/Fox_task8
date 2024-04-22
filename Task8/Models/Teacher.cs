@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Task8.Models;
@@ -21,5 +22,11 @@ public class Teacher: ObservableObject
     {
         get => _lastName;
         set => SetProperty(ref _lastName, value);
+    }
+    
+    [NotMapped]
+    public string FullName
+    {
+        get => $"{_lastName} {_firstName}";
     }
 }
