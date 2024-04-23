@@ -31,13 +31,12 @@
             </ScrollViewer>
             
             <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                  <Button Content="Add" Margin="10" Padding="20  4" Command="{Binding AddGroupCommand}"  />
-                  <Button Content="Edit" Margin="10" Padding="20  4" Command="{Binding EditGroupCommand}"
+                  <Button Content="Add" Margin="10" Padding="20  4" Command="{Binding AddStudentCommand}"  />
+                  <Button Content="Edit" Margin="10" Padding="20  4" Command="{Binding EditStudentCommand}"
                           CommandParameter="{Binding ElementName=GroupsGrid, Path=SelectedItem}"  />
-                  <Button Content="Delete" Margin="10" Padding="20  4" Command="{Binding DeleteGroupCommand}"
+                  <Button Content="Delete" Margin="10" Padding="20  4" Command="{Binding DeleteStudentCommand}"
                           CommandParameter="{Binding ElementName=GroupsGrid, Path=SelectedItem}"  />
-                  <Button Content="Show list of students" Margin="10" Padding="20  4" Command="{Binding DeleteCourseCommand}"
-                          CommandParameter="{Binding ElementName=GroupsGrid, Path=SelectedItem}"  />
+
             </StackPanel>
       </Grid>
 </Page>
