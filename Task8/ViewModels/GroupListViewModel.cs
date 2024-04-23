@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
@@ -68,6 +69,11 @@ public partial class GroupListViewModel: ObservableObject
     private void DeleteGroup(Group? selectedGroup)
     {
         if(selectedGroup == null) return;
+        if (_db.Students.Any(s => s.Group == selectedGroup))
+        {
+            MessageBox.Show("Unable to delete a group with students.");
+            return;
+        }
         _db.Groups.Remove(selectedGroup);
         _db.SaveChanges();
     }
