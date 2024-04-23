@@ -22,8 +22,16 @@
             
             <TextBlock Grid.Column="1" Text="{Binding MyCourse.Name, StringFormat=List of groups for {0}  }" TextAlignment="Center" FontSize="20"/>
             
-            <ScrollViewer Grid.Row="1"  Grid.Column="1" CanContentScroll="True" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-                <DataGrid x:Name="GroupsGrid" ItemsSource="{Binding Path= Groups}" FontSize="18" ColumnWidth="*" AutoGenerateColumns="False" CanUserAddRows="False"   >
+            <ScrollViewer Grid.Row="1"  Grid.Column="1" CanContentScroll="True" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" >
+                <DataGrid x:Name="GroupsGrid" ItemsSource="{Binding Path= Groups}" FontSize="18" ColumnWidth="*" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" >
+                    <DataGrid.InputBindings>
+                        <MouseBinding
+                            MouseAction="LeftDoubleClick"
+                            Command="{Binding ListOfStudentsCommand}"
+                            CommandParameter="{Binding ElementName=GroupsGrid, Path=SelectedItem}">
+                        </MouseBinding>
+                    </DataGrid.InputBindings>
+                    
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*"  MinWidth="200"/>
                         <DataGridTextColumn Header="Teacher" Binding="{Binding Path=Teacher.FullName , Mode=OneWay}" Width="*" MinWidth="200" />

@@ -22,7 +22,7 @@
             <TextBlock Grid.Column="1" Text="{Binding MyGroup.Name, StringFormat=List of students for {0}  }" TextAlignment="Center" FontSize="20"/>
             
             <ScrollViewer Grid.Row="1"  Grid.Column="1" CanContentScroll="True" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-                <DataGrid x:Name="GroupsGrid" ItemsSource="{Binding Path= Students}" FontSize="18" ColumnWidth="*" AutoGenerateColumns="False" CanUserAddRows="False"   >
+                <DataGrid x:Name="GroupsGrid" ItemsSource="{Binding Path= Students}" FontSize="18" ColumnWidth="*" AutoGenerateColumns="False" CanUserAddRows="False"  IsReadOnly="True" >
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="First name" Binding="{Binding Path=FirstName}" Width="*"  MinWidth="200"/>
                         <DataGridTextColumn Header="Last name" Binding="{Binding Path=LastName}" Width="*" MinWidth="200" />
