@@ -8,11 +8,11 @@ using Task8.Models;
 
 namespace Task8.ViewModels;
 
-public partial class GroupWindowViewModel: ObservableObject
+public partial class GroupWindowViewModel : ObservableObject
 {
     public Group MyGroup { get; set; }
     public ObservableCollection<Teacher> Teachers { get; }
-    public Teacher SelectedTeacher { get; set; }
+    //public Teacher SelectedTeacher { get; set; }
     private SqlServerAppContext _db;
     
     public GroupWindowViewModel(Group group, SqlServerAppContext db)
@@ -22,17 +22,5 @@ public partial class GroupWindowViewModel: ObservableObject
         Teachers = _db.Teachers.Local.ToObservableCollection();
         MyGroup = group;
     }
-    //
-    // [RelayCommand]
-    // public void SelectTeacher(Teacher? selectedTeacher)
-    // {
-    //     if (selectedTeacher == null) return;
-    // }
-    //
-    // private void peopleComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    // {
-    //     
-    //     Console.WriteLine("ASDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
-    // }
-    
+   
 }

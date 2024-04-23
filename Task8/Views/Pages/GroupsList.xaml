@@ -7,25 +7,31 @@
       xmlns:models="clr-namespace:Task8.Models"
       mc:Ignorable="d"
       Title="GroupsList">
-    <Grid Height="auto">
+    <Grid Height="auto" ShowGridLines="True">
             <Grid.RowDefinitions>
                   <RowDefinition Height="30"/>
                   <RowDefinition />
                   <RowDefinition Height="50" />
             </Grid.RowDefinitions>
+        
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.3*"/>
+            </Grid.ColumnDefinitions>
             
-            <TextBlock TextAlignment="Center" FontSize="20">list of groups</TextBlock>
+            <TextBlock Grid.Column="1" Text="{Binding MyCourse.Name, StringFormat=List of groups for {0}  }" TextAlignment="Center" FontSize="20"/>
             
-            <ScrollViewer Grid.Row="1" CanContentScroll="True" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-                <DataGrid x:Name="GroupsGrid" ItemsSource="{Binding Path= Groups}" AutoGenerateColumns="False">
+            <ScrollViewer Grid.Row="1"  Grid.Column="1" CanContentScroll="True" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+                <DataGrid x:Name="GroupsGrid" ItemsSource="{Binding Path= Groups}" FontSize="18" ColumnWidth="*" AutoGenerateColumns="False" CanUserAddRows="False"   >
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*" MinWidth="100" />
-                        <DataGridTextColumn Header="Teacher" Binding="{Binding Path=Teacher.FullName , Mode=OneWay}" Width="*" MinWidth="100"  />
+                        <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*"  MinWidth="200"/>
+                        <DataGridTextColumn Header="Teacher" Binding="{Binding Path=Teacher.FullName , Mode=OneWay}" Width="*" MinWidth="200" />
                     </DataGrid.Columns>
                 </DataGrid>
             </ScrollViewer>
             
-            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
                   <Button Content="Add" Margin="10" Padding="20  4" Command="{Binding AddGroupCommand}"  />
                   <Button Content="Edit" Margin="10" Padding="20  4" Command="{Binding EditGroupCommand}"
                           CommandParameter="{Binding ElementName=GroupsGrid, Path=SelectedItem}"  />

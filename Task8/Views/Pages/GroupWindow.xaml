@@ -33,7 +33,7 @@
  
         <TextBox Text="{Binding MyGroup.Name}" Grid.Column="1" />
         <!-- <TextBox Text="{Binding Description}" Grid.Column="1" Grid.Row="1" /> -->
-        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Teachers}" SelectedValue="{Binding SelectedTeacher}">
+        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Teachers}" SelectedValue="{Binding MyGroup.Teacher}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                         <TextBlock Text="{Binding FullName}" FontSize="16"  TextWrapping="Wrap" />

@@ -30,7 +30,7 @@ public partial class GroupListViewModel: ObservableObject
         if (groupWindow.ShowDialog() != true) return;
         var groupWindowViewModel = (GroupWindowViewModel)groupWindow.DataContext;
         var group = groupWindowViewModel.MyGroup;
-        group.TeacherId = groupWindowViewModel.SelectedTeacher.Id;
+        //group.TeacherId = groupWindowViewModel.SelectedTeacher.Id;
         group.CourseId = MyCourse.Id;
         
         _db.Groups.Add(group);
@@ -41,9 +41,32 @@ public partial class GroupListViewModel: ObservableObject
     [RelayCommand]
     private void EditGroup(Group? selectedGroup)
     {
-        if( selectedGroup == null) return;
+        if(selectedGroup == null) return;
+        var tempGroup = new Group()
+        {
+            Id = selectedGroup.Id,
+            Course = selectedGroup.Course,
+            Name = selectedGroup.Name,
+            Teacher = selectedGroup.Teacher
+        };
+        var groupWindow = new GroupWindow(tempGroup, _db);
+        if (groupWindow.ShowDialog() != true) return;
+        var groupWindowViewModel = (GroupWindowViewModel)groupWindow.DataContext;
+        var editedGroup = groupWindowViewModel.MyGroup;
 
-
+        selectedGroup.Name = editedGroup.Name;
+        selectedGroup.Teacher = editedGroup.Teacher;
+        
+        _db.Entry(selectedGroup).State = EntityState.Modified;
+        _db.SaveChanges();
+    }
+    
+    [RelayCommand]
+    private void DeleteGroup(Group? selectedGroup)
+    {
+        if(selectedGroup == null) return;
+        _db.Groups.Remove(selectedGroup);
+        _db.SaveChanges();
     }
 
     
