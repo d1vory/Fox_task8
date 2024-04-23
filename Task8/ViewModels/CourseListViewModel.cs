@@ -68,7 +68,7 @@ public partial class CourseListViewModel: ObservableObject
     private void ListOfGroups(Course? selectedCourse)
     {
         if( selectedCourse == null) return;
-        _mainFrame.Content = new GroupsList(selectedCourse);
+        _mainFrame.Content = new GroupsList(selectedCourse, _mainFrame);
         
     }
 }

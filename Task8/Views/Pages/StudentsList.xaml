@@ -1,12 +1,11 @@
-<Page x:Class="Task8.Views.Pages.GroupsList"
+<Page x:Class="Task8.Views.Pages.StudentsList"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Task8.Views.Pages"
-      xmlns:models="clr-namespace:Task8.Models"
       mc:Ignorable="d"
-      Title="GroupsList">
+      Title="StudentsList" >
     <Grid Height="auto">
             <Grid.RowDefinitions>
                   <RowDefinition Height="30"/>
@@ -20,13 +19,13 @@
                 <ColumnDefinition Width="0.3*"/>
             </Grid.ColumnDefinitions>
             
-            <TextBlock Grid.Column="1" Text="{Binding MyCourse.Name, StringFormat=List of groups for {0}  }" TextAlignment="Center" FontSize="20"/>
+            <TextBlock Grid.Column="1" Text="{Binding MyGroup.Name, StringFormat=List of students for {0}  }" TextAlignment="Center" FontSize="20"/>
             
             <ScrollViewer Grid.Row="1"  Grid.Column="1" CanContentScroll="True" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-                <DataGrid x:Name="GroupsGrid" ItemsSource="{Binding Path= Groups}" FontSize="18" ColumnWidth="*" AutoGenerateColumns="False" CanUserAddRows="False"   >
+                <DataGrid x:Name="GroupsGrid" ItemsSource="{Binding Path= Students}" FontSize="18" ColumnWidth="*" AutoGenerateColumns="False" CanUserAddRows="False"   >
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*"  MinWidth="200"/>
-                        <DataGridTextColumn Header="Teacher" Binding="{Binding Path=Teacher.FullName , Mode=OneWay}" Width="*" MinWidth="200" />
+                        <DataGridTextColumn Header="First name" Binding="{Binding Path=FirstName}" Width="*"  MinWidth="200"/>
+                        <DataGridTextColumn Header="Last name" Binding="{Binding Path=LastName}" Width="*" MinWidth="200" />
                     </DataGrid.Columns>
                 </DataGrid>
             </ScrollViewer>
@@ -37,7 +36,7 @@
                           CommandParameter="{Binding ElementName=GroupsGrid, Path=SelectedItem}"  />
                   <Button Content="Delete" Margin="10" Padding="20  4" Command="{Binding DeleteGroupCommand}"
                           CommandParameter="{Binding ElementName=GroupsGrid, Path=SelectedItem}"  />
-                  <Button Content="Show list of students" Margin="10" Padding="20  4" Command="{Binding ListOfStudentsCommand}"
+                  <Button Content="Show list of students" Margin="10" Padding="20  4" Command="{Binding DeleteCourseCommand}"
                           CommandParameter="{Binding ElementName=GroupsGrid, Path=SelectedItem}"  />
             </StackPanel>
       </Grid>

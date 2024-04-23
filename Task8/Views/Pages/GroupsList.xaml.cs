@@ -6,9 +6,9 @@ namespace Task8.Views.Pages;
 
 public partial class GroupsList : Page
 {
-    public GroupsList(Course course)
+    public GroupsList(Course course, Frame mainFrame)
     {
         InitializeComponent();
-        DataContext = new GroupListViewModel(course);
+        DataContext = new GroupListViewModel(course, mainFrame);
     }
 }
