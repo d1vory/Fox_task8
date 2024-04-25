@@ -36,7 +36,8 @@
                           CommandParameter="{Binding ElementName=GroupsGrid, Path=SelectedItem}"  />
                   <Button Content="Delete" Margin="10" Padding="20  4" Command="{Binding DeleteStudentCommand}"
                           CommandParameter="{Binding ElementName=GroupsGrid, Path=SelectedItem}"  />
-
+                  <Button Content="Import" Margin="10" Padding="20  4" Command="{Binding ImportStudentsCommand}"  />
+                  <Button Content="Export" Margin="10" Padding="20  4" Command="{Binding ExportStudentsCommand}"  />
             </StackPanel>
       </Grid>
 </Page>
