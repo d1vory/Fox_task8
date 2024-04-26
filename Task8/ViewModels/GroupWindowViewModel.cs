@@ -12,7 +12,6 @@ public partial class GroupWindowViewModel : ObservableObject
 {
     public Group MyGroup { get; set; }
     public ObservableCollection<Teacher> Teachers { get; }
-    //public Teacher SelectedTeacher { get; set; }
     private SqlServerAppContext _db;
     
     public GroupWindowViewModel(Group group, SqlServerAppContext db)

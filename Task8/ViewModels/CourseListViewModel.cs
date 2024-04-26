@@ -10,11 +10,11 @@ using Task8.Views.Pages;
 
 namespace Task8.ViewModels;
 
-public partial class CourseListViewModel: ObservableObject
+public partial class CourseListViewModel : ObservableObject
 {
+    public ObservableCollection<Course> Courses { get; }
     private Frame _mainFrame;
     private SqlServerAppContext _db = new SqlServerAppContext();
-    public ObservableCollection<Course> Courses { get; }
 
     public CourseListViewModel(Frame mainFrame)
     {
@@ -22,7 +22,7 @@ public partial class CourseListViewModel: ObservableObject
         Courses = _db.Courses.Local.ToObservableCollection();
         _mainFrame = mainFrame;
     }
-    
+
     [RelayCommand]
     private void AddCourse()
     {
@@ -38,7 +38,7 @@ public partial class CourseListViewModel: ObservableObject
     [RelayCommand]
     private void EditCourse(Course? selectedCourse)
     {
-        if( selectedCourse == null) return;
+        if (selectedCourse == null) return;
 
         var tempCourse = new Course()
         {
@@ -46,7 +46,7 @@ public partial class CourseListViewModel: ObservableObject
             Name = selectedCourse.Name,
             Description = selectedCourse.Description
         };
-        
+
         CourseWindow courseWindow = new CourseWindow(tempCourse);
         if (courseWindow.ShowDialog() == true)
         {
@@ -60,21 +60,21 @@ public partial class CourseListViewModel: ObservableObject
     [RelayCommand]
     private void DeleteCourse(Course? selectedCourse)
     {
-        if( selectedCourse == null) return;
+        if (selectedCourse == null) return;
         if (_db.Groups.Any(g => g.Course == selectedCourse))
         {
             MessageBox.Show("Unable to delete a course with groups.");
             return;
         }
+
         _db.Courses.Remove(selectedCourse);
         _db.SaveChanges();
     }
-    
+
     [RelayCommand]
     private void ListOfGroups(Course? selectedCourse)
     {
-        if( selectedCourse == null) return;
+        if (selectedCourse == null) return;
         _mainFrame.Content = new GroupsList(selectedCourse, _mainFrame);
-        
     }
 }

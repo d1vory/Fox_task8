@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using Aspose.Words;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -14,14 +15,14 @@ using Task8.Views.Pages;
 
 namespace Task8.ViewModels;
 
-public partial class StudentListViewModel: ObservableObject
+public partial class StudentListViewModel : ObservableObject
 {
-    private Frame _mainFrame;
-    private SqlServerAppContext _db = new SqlServerAppContext();
     public ObservableCollection<Student> Students { get; set; }
     public Group MyGroup { get; set; }
-    
-    
+    private Frame _mainFrame;
+    private SqlServerAppContext _db = new SqlServerAppContext();
+
+
     public StudentListViewModel(Group group, Frame mainFrame)
     {
         _db.Students.Where(s => s.Group == group).Load();
@@ -29,7 +30,7 @@ public partial class StudentListViewModel: ObservableObject
         MyGroup = group;
         _mainFrame = mainFrame;
     }
-    
+
     [RelayCommand]
     private void AddStudent()
     {
@@ -42,11 +43,11 @@ public partial class StudentListViewModel: ObservableObject
             _db.SaveChanges();
         }
     }
-    
+
     [RelayCommand]
     private void EditStudent(Student? selectedStudent)
     {
-        if(selectedStudent == null) return;
+        if (selectedStudent == null) return;
 
         var tempStudent = new Student()
         {
@@ -55,7 +56,7 @@ public partial class StudentListViewModel: ObservableObject
             LastName = selectedStudent.LastName,
             Group = selectedStudent.Group
         };
-        
+
         var studentWindow = new StudentWindow(tempStudent);
         if (studentWindow.ShowDialog() == true)
         {
@@ -65,11 +66,11 @@ public partial class StudentListViewModel: ObservableObject
             _db.SaveChanges();
         }
     }
-    
+
     [RelayCommand]
     private void DeleteStudent(Student? selectedStudent)
     {
-        if( selectedStudent == null) return;
+        if (selectedStudent == null) return;
         _db.Students.Remove(selectedStudent);
         _db.SaveChanges();
     }
@@ -81,7 +82,7 @@ public partial class StudentListViewModel: ObservableObject
         dlg.FileName = $"Students_{MyGroup.Name}"; // Default file name
         dlg.DefaultExt = ".csv"; // Default file extension
         dlg.Filter = "Text documents (.csv)|*.csv"; // Filter files by extension
-        
+
         var result = dlg.ShowDialog();
         if (!result.HasValue || !result.Value) return;
         var fileName = dlg.FileName;
@@ -100,6 +101,8 @@ public partial class StudentListViewModel: ObservableObject
                 csv.NextRecord();
             }
         }
+
+        MessageBox.Show($"Saved at {fileName}");
     }
 
     [RelayCommand]
@@ -113,7 +116,7 @@ public partial class StudentListViewModel: ObservableObject
 
         var studentsToRemove = _db.Students.Where(s => s.Group == MyGroup);
         _db.Students.RemoveRange(studentsToRemove);
-        
+
         var config = new CsvConfiguration(CultureInfo.InvariantCulture);
         config.TrimOptions = TrimOptions.Trim;
         using (var reader = new StreamReader(fileName))
@@ -123,7 +126,7 @@ public partial class StudentListViewModel: ObservableObject
             {
                 ParsedStudent record;
                 try
-                {    
+                {
                     record = csv.GetRecord<ParsedStudent>();
                 }
                 catch (CsvHelperException ex)
@@ -138,9 +141,10 @@ public partial class StudentListViewModel: ObservableObject
                 _db.Add(student);
             }
         }
+
         _db.SaveChanges();
     }
-    
+
     [RelayCommand]
     private void ExportStudentsDocX()
     {
@@ -148,22 +152,32 @@ public partial class StudentListViewModel: ObservableObject
         dlg.FileName = $"Students_{MyGroup.Name}"; // Default file name
         dlg.DefaultExt = ".docx"; // Default file extension
         dlg.Filter = "Text documents (.docx)|*.docx"; // Filter files by extension
-        
+
         var result = dlg.ShowDialog();
         if (!result.HasValue || !result.Value) return;
-        
+
         var doc = new Document();
         var builder = new DocumentBuilder(doc);
-        
+
+        builder.Font.Size = 16;
+        builder.Bold = true;
+        builder.ParagraphFormat.Alignment = ParagraphAlignment.Center;
+        var course = _db.Courses.FirstOrDefault(c => c.Id == MyGroup.CourseId);
+        builder.Writeln($"Students of {MyGroup.Name} in course '{course?.Name}'");
+
+        builder.Font.Size = 14;
+        builder.Bold = false;
+        builder.ParagraphFormat.Alignment = ParagraphAlignment.Left;
+
         builder.ListFormat.ApplyNumberDefault();
 
         foreach (var st in Students)
         {
             builder.Writeln($"{st.LastName} {st.FirstName}");
         }
+
         builder.ListFormat.RemoveNumbers();
         doc.Save(dlg.FileName);
+        MessageBox.Show($"Saved at {dlg.FileName}");
     }
-
-        
 }

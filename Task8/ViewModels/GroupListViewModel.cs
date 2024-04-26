@@ -10,14 +10,14 @@ using Task8.Views.Pages;
 
 namespace Task8.ViewModels;
 
-public partial class GroupListViewModel: ObservableObject
+public partial class GroupListViewModel : ObservableObject
 {
-    private Frame _mainFrame;
-    private SqlServerAppContext _db = new SqlServerAppContext();
     public ObservableCollection<Group> Groups { get; }
     public Course MyCourse { get; set; }
-    
-    
+    private Frame _mainFrame;
+    private SqlServerAppContext _db = new SqlServerAppContext();
+
+
     public GroupListViewModel(Course course, Frame mainFrame)
     {
         _db.Groups.Include(g => g.Teacher).Where(g => g.Course == course).Load();
@@ -25,8 +25,8 @@ public partial class GroupListViewModel: ObservableObject
         MyCourse = course;
         _mainFrame = mainFrame;
     }
-    
-        
+
+
     [RelayCommand]
     private void AddGroup()
     {
@@ -36,16 +36,16 @@ public partial class GroupListViewModel: ObservableObject
         var group = groupWindowViewModel.MyGroup;
         //group.TeacherId = groupWindowViewModel.SelectedTeacher.Id;
         group.CourseId = MyCourse.Id;
-        
+
         _db.Groups.Add(group);
         _db.SaveChanges();
     }
-    
-    
+
+
     [RelayCommand]
     private void EditGroup(Group? selectedGroup)
     {
-        if(selectedGroup == null) return;
+        if (selectedGroup == null) return;
         var tempGroup = new Group()
         {
             Id = selectedGroup.Id,
@@ -60,31 +60,30 @@ public partial class GroupListViewModel: ObservableObject
 
         selectedGroup.Name = editedGroup.Name;
         selectedGroup.Teacher = editedGroup.Teacher;
-        
+
         _db.Entry(selectedGroup).State = EntityState.Modified;
         _db.SaveChanges();
     }
-    
+
     [RelayCommand]
     private void DeleteGroup(Group? selectedGroup)
     {
-        if(selectedGroup == null) return;
+        if (selectedGroup == null) return;
         if (_db.Students.Any(s => s.Group == selectedGroup))
         {
             MessageBox.Show("Unable to delete a group with students.");
             return;
         }
+
         _db.Groups.Remove(selectedGroup);
         _db.SaveChanges();
     }
 
-        
+
     [RelayCommand]
     private void ListOfStudents(Group? selectedGroup)
     {
-        if(selectedGroup == null) return;
+        if (selectedGroup == null) return;
         _mainFrame.Content = new StudentsList(selectedGroup, _mainFrame);
-        
     }
-    
 }
