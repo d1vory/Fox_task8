@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Windows.Controls;
+using Aspose.Words;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CsvHelper;
@@ -138,6 +139,30 @@ public partial class StudentListViewModel: ObservableObject
             }
         }
         _db.SaveChanges();
+    }
+    
+    [RelayCommand]
+    private void ExportStudentsDocX()
+    {
+        Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+        dlg.FileName = $"Students_{MyGroup.Name}"; // Default file name
+        dlg.DefaultExt = ".docx"; // Default file extension
+        dlg.Filter = "Text documents (.docx)|*.docx"; // Filter files by extension
+        
+        var result = dlg.ShowDialog();
+        if (!result.HasValue || !result.Value) return;
+        
+        var doc = new Document();
+        var builder = new DocumentBuilder(doc);
+        
+        builder.ListFormat.ApplyNumberDefault();
+
+        foreach (var st in Students)
+        {
+            builder.Writeln($"{st.LastName} {st.FirstName}");
+        }
+        builder.ListFormat.RemoveNumbers();
+        doc.Save(dlg.FileName);
     }
 
         
