@@ -7,14 +7,20 @@ namespace Task8.Views.Pages;
 
 public partial class GroupWindow : Window
 {
+    private GroupWindowViewModel _viewModel;
+    
     public GroupWindow(Group group, SqlServerAppContext db)
     {
         InitializeComponent();
-        DataContext = new GroupWindowViewModel(group, db);
+        _viewModel = new GroupWindowViewModel(group, db);
+        DataContext = _viewModel;
     }
     
     void Accept_Click(object sender, RoutedEventArgs e)
     {
-        DialogResult = true;
+        if (_viewModel.CanSubmit())
+        {
+            DialogResult = true;
+        }
     }
 }

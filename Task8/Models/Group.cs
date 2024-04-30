@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Task8.Models;
 
-public class Group: ObservableObject
+public class Group: ObservableValidator
 {
     public int Id { get; set; }
     private string _name = null!;
@@ -16,7 +16,7 @@ public class Group: ObservableObject
     public string Name
     {
         get => _name;
-        set => SetProperty(ref _name, value);
+        set => SetProperty(ref _name, value, true);
     }
     
     public  int CourseId 

@@ -36,9 +36,9 @@
         <TextBlock Text="Назва" />
         <TextBlock Text="Опис" Grid.Row="1" />
  
-        <TextBox Text="{Binding Name}" Grid.Column="1" />
+        <TextBox Text="{Binding Name, ValidatesOnNotifyDataErrors=True}" Grid.Column="1" />
         <TextBox Text="{Binding Description}" Grid.Column="1" Grid.Row="1" />
- 
+        
         <StackPanel HorizontalAlignment="Center" Margin="20" Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
             <Button Margin="10 0" Padding="50  0" IsDefault="True" Click="Accept_Click" >OK</Button>
             <Button Margin="10 0" Padding="50  0" IsCancel="True" >Отмена</Button>
