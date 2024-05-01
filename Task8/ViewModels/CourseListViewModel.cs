@@ -78,4 +78,10 @@ public partial class CourseListViewModel : ObservableObject
         if (selectedCourse == null) return;
         _mainFrame.Content = new GroupsList(selectedCourse, _mainFrame);
     }
+    
+    [RelayCommand]
+    private void ListOfTeachers()
+    {
+        _mainFrame.Content = new TeacherList(_mainFrame);
+    }
 }

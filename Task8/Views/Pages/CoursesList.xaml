@@ -35,7 +35,9 @@
                   <Button Content="Delete" Margin="10" Padding="20  4" Command="{Binding DeleteCourseCommand}"
                           CommandParameter="{Binding ElementName=CoursesList2, Path=SelectedItem}"  />
                   <Button Content="Show list of groups" Margin="10" Padding="20  4" Command="{Binding ListOfGroupsCommand}"
-                          CommandParameter="{Binding ElementName=CoursesList2, Path=SelectedItem}"  />
+                          CommandParameter="{Binding ElementName=CoursesList2, Path=SelectedItem}" Background="LightSteelBlue"  />
+                  <Button Content="Show list of teachers" Margin="10" Padding="20  4" Command="{Binding ListOfTeachersCommand}" Background="Beige"
+                          />
             </StackPanel>
       </Grid>
 </Page>
