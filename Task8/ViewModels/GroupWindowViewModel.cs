@@ -11,19 +11,21 @@ public partial class GroupWindowViewModel : ObservableValidator
 {
     public Group MyGroup { get; set; }
     public ObservableCollection<Teacher> Teachers { get; }
+    
     private SqlServerAppContext _db;
     private string _groupName;
     private Teacher _selectedTeacher;
     
-
+    
     [Required(ErrorMessage = "Name is Required")]
-    [MaxLength(50, ErrorMessage = "Max length reached")]
+    [MaxLength(50, ErrorMessage = "Max length is 50")]
+    [CustomValidation(typeof(GroupWindowViewModel), nameof(ValidateGroupName))]
     public string GroupName
     {
         get => _groupName;
         set
         {
-            SetProperty(ref _groupName, value, true);
+            SetProperty(ref _groupName, value, false);
             MyGroup.Name = value;
         }
     }
@@ -34,11 +36,10 @@ public partial class GroupWindowViewModel : ObservableValidator
         get => _selectedTeacher;
         set
         {
-            SetProperty(ref _selectedTeacher, value, true);
+            SetProperty(ref _selectedTeacher, value, false);
             MyGroup.Teacher = value;
         }
     }
-    
     
     public GroupWindowViewModel(Group group, SqlServerAppContext db)
     {
@@ -50,10 +51,21 @@ public partial class GroupWindowViewModel : ObservableValidator
         _selectedTeacher = group.Teacher;
     }
     
-    
     public bool CanSubmit()
     {
         ValidateAllProperties();
         return !HasErrors;
+    }
+
+    public static ValidationResult ValidateGroupName(string name, ValidationContext context)
+    {
+        var db = new SqlServerAppContext();
+        bool isExist = db.Groups.Any(g => g.Name == name);
+        if (!isExist)
+        {
+            return ValidationResult.Success;
+        }
+
+        return new ValidationResult("Provided name already exists");
     }
 }
