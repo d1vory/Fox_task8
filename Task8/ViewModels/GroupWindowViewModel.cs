@@ -60,7 +60,8 @@ public partial class GroupWindowViewModel : ObservableValidator
     public static ValidationResult ValidateGroupName(string name, ValidationContext context)
     {
         var db = new SqlServerAppContext();
-        bool isExist = db.Groups.Any(g => g.Name == name);
+        GroupWindowViewModel viewmodel = (GroupWindowViewModel)context.ObjectInstance;
+        bool isExist = db.Groups.Any(g => g.Name == name && g.Id != viewmodel.MyGroup.Id);
         if (!isExist)
         {
             return ValidationResult.Success;

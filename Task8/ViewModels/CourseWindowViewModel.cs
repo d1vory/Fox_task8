@@ -52,7 +52,9 @@ public class CourseWindowViewModel: ObservableValidator
     public static ValidationResult ValidateName(string name, ValidationContext context)
     {
         var db = new SqlServerAppContext();
-        bool isExist = db.Courses.Any(c => c.Name == name);
+        CourseWindowViewModel viewmodel = (CourseWindowViewModel)context.ObjectInstance;
+            
+        bool isExist = db.Courses.Any(c => c.Name == name && c.Id != viewmodel.MyCourse.Id);
         if (!isExist)
         {
             return ValidationResult.Success;
