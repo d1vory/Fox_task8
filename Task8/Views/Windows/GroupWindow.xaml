@@ -14,45 +14,13 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="Margin" Value="8" />
-        </Style>
         <Style TargetType="Button">
             <Setter Property="MinWidth" Value="60" />
             <Setter Property="Margin" Value="8" />
         </Style>
-        
-        <Style x:Key="CustomErrorControlOnErrorStyle" TargetType="TextBox" >
-            <Setter Property="Validation.ErrorTemplate">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <StackPanel>
-                            <AdornedElementPlaceholder x:Name="placeholder" />
-                            <TextBlock FontSize="11" FontStyle="Italic" Foreground="Red"
-                                       Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" />
-                        </StackPanel>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        
-        <Style x:Key="ComboBoxCustomErrorControlOnErrorStyle" TargetType="ComboBox" >
-            <Setter Property="Validation.ErrorTemplate">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <StackPanel>
-                            <AdornedElementPlaceholder x:Name="placeholder" />
-                            <TextBlock FontSize="11" FontStyle="Italic" Foreground="Red"
-                                       Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" />
-                        </StackPanel>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition MaxHeight="100"/>
@@ -66,7 +34,7 @@
         <TextBlock Text="Group name" />
         <TextBlock Text="Teacher" Grid.Row="1" />
  
-        <TextBox Grid.Column="1"  FontSize="16"  VerticalAlignment="Center" 
+        <TextBox Grid.Column="1" Margin="8" FontSize="16"  VerticalAlignment="Center" 
                  Text="{Binding Path=GroupName, Mode=TwoWay, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
                  Style="{StaticResource CustomErrorControlOnErrorStyle}" />
 
@@ -78,11 +46,9 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
         
-        <TextBlock Grid.Row="2"  Grid.ColumnSpan="2" Text="{Binding Errors}"/>
-        
         <StackPanel HorizontalAlignment="Center" Margin="20" Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
 
-            <Button Margin="10 0" Padding="50  0" IsDefault="True" Command="{Binding Submit}" Click="Accept_Click" >OK</Button>
+            <Button Margin="10 0" Padding="50  0" IsDefault="True" Click="Accept_Click" >OK</Button>
             <Button Margin="10 0" Padding="50  0" IsCancel="True" >Отмена</Button>
         </StackPanel>
     </Grid>

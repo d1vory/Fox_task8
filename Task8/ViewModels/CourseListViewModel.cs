@@ -27,34 +27,35 @@ public partial class CourseListViewModel : ObservableObject
     private void AddCourse()
     {
         CourseWindow courseWindow = new CourseWindow(new Course());
-        if (courseWindow.ShowDialog() == true)
-        {
-            var course = courseWindow.Course;
-            _db.Courses.Add(course);
-            _db.SaveChanges();
-        }
+        if (courseWindow.ShowDialog() != true) return;
+        var courseWindowViewModel = courseWindow.ViewModel;
+        var course = courseWindowViewModel.MyCourse;
+        _db.Courses.Add(course);
+        _db.SaveChanges();
     }
 
     [RelayCommand]
     private void EditCourse(Course? selectedCourse)
     {
+        
         if (selectedCourse == null) return;
-
+        
         var tempCourse = new Course()
         {
             Id = selectedCourse.Id,
             Name = selectedCourse.Name,
             Description = selectedCourse.Description
         };
-
         CourseWindow courseWindow = new CourseWindow(tempCourse);
-        if (courseWindow.ShowDialog() == true)
-        {
-            selectedCourse.Name = courseWindow.Course.Name;
-            selectedCourse.Description = courseWindow.Course.Description;
-            _db.Entry(selectedCourse).State = EntityState.Modified;
-            _db.SaveChanges();
-        }
+        if (courseWindow.ShowDialog() != true) return;
+        var courseWindowViewModel = courseWindow.ViewModel;
+        var editedCourse = courseWindowViewModel.MyCourse;
+
+        selectedCourse.Name = editedCourse.Name;
+        selectedCourse.Description = editedCourse.Description;
+        
+        _db.Entry(selectedCourse).State = EntityState.Modified;
+        _db.SaveChanges();
     }
 
     [RelayCommand]

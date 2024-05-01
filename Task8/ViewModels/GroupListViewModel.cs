@@ -32,9 +32,8 @@ public partial class GroupListViewModel : ObservableObject
     {
         var groupWindow = new GroupWindow(new Group(), _db);
         if (groupWindow.ShowDialog() != true) return;
-        var groupWindowViewModel = (GroupWindowViewModel)groupWindow.DataContext;
+        var groupWindowViewModel = groupWindow.ViewModel;
         var group = groupWindowViewModel.MyGroup;
-        //group.TeacherId = groupWindowViewModel.SelectedTeacher.Id;
         group.CourseId = MyCourse.Id;
 
         _db.Groups.Add(group);
@@ -55,7 +54,7 @@ public partial class GroupListViewModel : ObservableObject
         };
         var groupWindow = new GroupWindow(tempGroup, _db);
         if (groupWindow.ShowDialog() != true) return;
-        var groupWindowViewModel = (GroupWindowViewModel)groupWindow.DataContext;
+        var groupWindowViewModel = groupWindow.ViewModel;
         var editedGroup = groupWindowViewModel.MyGroup;
 
         selectedGroup.Name = editedGroup.Name;
