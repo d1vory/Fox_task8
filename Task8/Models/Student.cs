@@ -42,11 +42,4 @@ public class ParsedStudent
     public string FirstName { get; set; }
     public string LastName { get; set; }
     
-    public  bool Equals( Student obj )
-    {
-        // var other = obj as TestData;
-        // if( other == null ) return false;
-
-        return false;             
-    }
 }
