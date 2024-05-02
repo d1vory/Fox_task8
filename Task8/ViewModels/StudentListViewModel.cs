@@ -35,13 +35,12 @@ public partial class StudentListViewModel : ObservableObject
     private void AddStudent()
     {
         var studentWindow = new StudentWindow(new Student());
-        if (studentWindow.ShowDialog() == true)
-        {
-            var student = studentWindow.Student;
-            student.GroupId = MyGroup.Id;
-            _db.Students.Add(student);
-            _db.SaveChanges();
-        }
+        if (studentWindow.ShowDialog() != true) return;
+        var studentWindowViewModel = studentWindow.ViewModel;
+        var student = studentWindowViewModel.MyStudent;
+        student.GroupId = MyGroup.Id;
+        _db.Students.Add(student);
+        _db.SaveChanges();
     }
 
     [RelayCommand]
@@ -56,15 +55,14 @@ public partial class StudentListViewModel : ObservableObject
             LastName = selectedStudent.LastName,
             Group = selectedStudent.Group
         };
-
         var studentWindow = new StudentWindow(tempStudent);
-        if (studentWindow.ShowDialog() == true)
-        {
-            selectedStudent.FirstName = studentWindow.Student.FirstName;
-            selectedStudent.LastName = studentWindow.Student.LastName;
-            _db.Entry(selectedStudent).State = EntityState.Modified;
-            _db.SaveChanges();
-        }
+        if (studentWindow.ShowDialog() != true) return;
+        var studentWindowViewModel = studentWindow.ViewModel;
+        var editedStudent = studentWindowViewModel.MyStudent;
+        selectedStudent.FirstName = editedStudent.FirstName;
+        selectedStudent.LastName = editedStudent.LastName;
+        _db.Entry(selectedStudent).State = EntityState.Modified;
+        _db.SaveChanges();
     }
 
     [RelayCommand]
