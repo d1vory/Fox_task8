@@ -11,6 +11,7 @@ using CsvHelper.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Task8.Data;
 using Task8.Models;
+using Task8.Services;
 using Task8.Views.Pages;
 
 namespace Task8.ViewModels;
@@ -77,29 +78,14 @@ public partial class StudentListViewModel : ObservableObject
     private void ExportStudents()
     {
         Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-        dlg.FileName = $"Students_{MyGroup.Name}"; // Default file name
-        dlg.DefaultExt = ".csv"; // Default file extension
-        dlg.Filter = "Text documents (.csv)|*.csv"; // Filter files by extension
+        dlg.FileName = $"Students_{MyGroup.Name}";
+        dlg.DefaultExt = ".csv";
+        dlg.Filter = "Text documents (.csv)|*.csv";
 
         var result = dlg.ShowDialog();
         if (!result.HasValue || !result.Value) return;
         var fileName = dlg.FileName;
-        using (StreamWriter outputFile = new StreamWriter(fileName))
-        using (var csv = new CsvWriter(outputFile, CultureInfo.InvariantCulture))
-        {
-            csv.WriteHeader<ParsedStudent>();
-            csv.NextRecord();
-            foreach (var s in Students)
-            {
-                var parsedStudent = new ParsedStudent()
-                {
-                    FirstName = s.FirstName, LastName = s.LastName
-                };
-                csv.WriteRecord(parsedStudent);
-                csv.NextRecord();
-            }
-        }
-
+        StudentService.ExportStudents(fileName, Students);
         MessageBox.Show($"Saved at {fileName}");
     }
 
@@ -107,75 +93,26 @@ public partial class StudentListViewModel : ObservableObject
     private void ImportStudents()
     {
         var dlg = new Microsoft.Win32.OpenFileDialog();
-        dlg.Filter = "Text documents (.csv)|*.csv"; // Filter files by extension
+        dlg.Filter = "Text documents (.csv)|*.csv";
         var result = dlg.ShowDialog();
         if (!result.HasValue || !result.Value) return;
         var fileName = dlg.FileName;
-
-        var studentsToRemove = _db.Students.Where(s => s.Group == MyGroup);
-        _db.Students.RemoveRange(studentsToRemove);
-
-        var config = new CsvConfiguration(CultureInfo.InvariantCulture);
-        config.TrimOptions = TrimOptions.Trim;
-        using (var reader = new StreamReader(fileName))
-        using (var csv = new CsvReader(reader, config))
-        {
-            while (csv.Read())
-            {
-                ParsedStudent record;
-                try
-                {
-                    record = csv.GetRecord<ParsedStudent>();
-                }
-                catch (CsvHelperException ex)
-                {
-                    continue;
-                }
-
-                var student = new Student()
-                {
-                    FirstName = record.FirstName, LastName = record.LastName, GroupId = MyGroup.Id
-                };
-                _db.Add(student);
-            }
-        }
-
-        _db.SaveChanges();
+        StudentService.ImportStudentsToGroup(fileName, MyGroup, _db);
     }
 
     [RelayCommand]
     private void ExportStudentsDocX()
     {
         Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-        dlg.FileName = $"Students_{MyGroup.Name}"; // Default file name
-        dlg.DefaultExt = ".docx"; // Default file extension
-        dlg.Filter = "Text documents (.docx)|*.docx"; // Filter files by extension
+        dlg.FileName = $"Students_{MyGroup.Name}";
+        dlg.DefaultExt = ".docx";
+        dlg.Filter = "Text documents (.docx)|*.docx";
 
         var result = dlg.ShowDialog();
         if (!result.HasValue || !result.Value) return;
-
-        var doc = new Document();
-        var builder = new DocumentBuilder(doc);
-
-        builder.Font.Size = 16;
-        builder.Bold = true;
-        builder.ParagraphFormat.Alignment = ParagraphAlignment.Center;
-        var course = _db.Courses.FirstOrDefault(c => c.Id == MyGroup.CourseId);
-        builder.Writeln($"Students of {MyGroup.Name} in course '{course?.Name}'");
-
-        builder.Font.Size = 14;
-        builder.Bold = false;
-        builder.ParagraphFormat.Alignment = ParagraphAlignment.Left;
-
-        builder.ListFormat.ApplyNumberDefault();
-
-        foreach (var st in Students)
-        {
-            builder.Writeln($"{st.LastName} {st.FirstName}");
-        }
-
-        builder.ListFormat.RemoveNumbers();
-        doc.Save(dlg.FileName);
+        var fileName = dlg.FileName;
+        StudentService.ExportStudentsDocX(fileName, Students, MyGroup, _db);
+        
         MessageBox.Show($"Saved at {dlg.FileName}");
     }
 }
