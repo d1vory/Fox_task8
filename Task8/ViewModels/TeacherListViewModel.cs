@@ -27,34 +27,32 @@ public partial class TeacherListViewModel: ObservableObject
     private void AddTeacher()
     {
         var teacherWindow = new TeacherWindow(new Teacher());
-        if (teacherWindow.ShowDialog() == true)
-        {
-            var teacher = teacherWindow.Teacher;
-            _db.Teachers.Add(teacher);
-            _db.SaveChanges();
-        }
+        if (teacherWindow.ShowDialog() != true) return;
+        var teacherWindowViewModel = teacherWindow.ViewModel;
+        var teacher = teacherWindowViewModel.MyTeacher;
+        _db.Teachers.Add(teacher);
+        _db.SaveChanges();
     }
     
     [RelayCommand]
     private void EditTeacher(Teacher? selectedTeacher)
     {
         if (selectedTeacher == null) return;
-    
+
         var tempTeacher = new Teacher()
         {
             Id = selectedTeacher.Id,
             FirstName = selectedTeacher.FirstName,
             LastName = selectedTeacher.LastName,
         };
-    
         var teacherWindow = new TeacherWindow(tempTeacher);
-        if (teacherWindow.ShowDialog() == true)
-        {
-            selectedTeacher.FirstName = teacherWindow.Teacher.FirstName;
-            selectedTeacher.LastName = teacherWindow.Teacher.LastName;
-            _db.Entry(selectedTeacher).State = EntityState.Modified;
-            _db.SaveChanges();
-        }
+        if (teacherWindow.ShowDialog() != true) return;
+        var teacherWindowViewModel = teacherWindow.ViewModel;
+        var editedTeacher = teacherWindowViewModel.MyTeacher;
+        selectedTeacher.FirstName = editedTeacher.FirstName;
+        selectedTeacher.LastName = editedTeacher.LastName;
+        _db.Entry(selectedTeacher).State = EntityState.Modified;
+        _db.SaveChanges();
     }
 
     [RelayCommand]

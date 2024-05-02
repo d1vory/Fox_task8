@@ -1,21 +1,25 @@
 using System.Windows;
 using Task8.Models;
+using Task8.ViewModels;
 
 namespace Task8.Views.Windows;
 
 public partial class TeacherWindow : Window
 {
-    public Teacher Teacher { get; private set; }
+    public TeacherWindowViewModel ViewModel { get; private set; }
     
     public TeacherWindow(Teacher teacher)
     {
         InitializeComponent();
-        Teacher = teacher;
-        DataContext = Teacher;
+        ViewModel = new TeacherWindowViewModel(teacher);
+        DataContext = ViewModel;
     }
     
     void Accept_Click(object sender, RoutedEventArgs e)
     {
-        DialogResult = true;
+        if (ViewModel.CanSubmit())
+        {
+            DialogResult = true;
+        }
     }
 }
