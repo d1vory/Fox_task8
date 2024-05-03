@@ -8,4 +8,41 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Aspose.Words" Version="24.4.0" />
+      <PackageReference Include="CalcBinding" Version="2.5.2" />
+      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+      <PackageReference Include="CsvHelper" Version="31.0.4" />
+      <PackageReference Include="InMemoryDatabase" Version="1.0.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0-preview.3.24172.4" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.0-preview.2.24128.4" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0-preview.3.24172.4" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0-preview.3.24172.4">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Migrations\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="Views\Windows\CourseWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="Views\Windows\GroupWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="Views\Windows\StudentWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
+
 </Project>
