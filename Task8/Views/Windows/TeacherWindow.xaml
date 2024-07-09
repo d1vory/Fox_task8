@@ -1,0 +1,51 @@
+<Window x:Class="Task8.Views.Windows.TeacherWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Task8.Views.Windows"
+        mc:Ignorable="d"
+        Title="Edit teacher" MinHeight="200" MinWidth="400" MaxHeight="300" MaxWidth="500">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="8" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="8" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="MinWidth" Value="60" />
+            <Setter Property="Margin" Value="8" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition MaxHeight="100"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="First name" />
+        <TextBlock Text="Last Name" Grid.Row="1" />
+ 
+        <TextBox Grid.Column="1" Margin="8" FontSize="14" VerticalAlignment="Center"
+                 Text="{Binding Path=FirstName, Mode=TwoWay, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
+                 Style="{StaticResource CustomErrorControlOnErrorStyle}"/>
+        <TextBox Grid.Column="1" Grid.Row="1" Margin="8" FontSize="14" VerticalAlignment="Center"
+                 Text="{Binding Path=LastName, Mode=TwoWay, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"
+                 Style="{StaticResource CustomErrorControlOnErrorStyle}"/>
+ 
+        <StackPanel HorizontalAlignment="Center" Margin="20" Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
+            <Button Margin="10 0" Padding="50  0" IsDefault="True" Click="Accept_Click" >OK</Button>
+            <Button Margin="10 0" Padding="50  0" IsCancel="True" >Отмена</Button>
+        </StackPanel>
+    </Grid>
+</Window>
